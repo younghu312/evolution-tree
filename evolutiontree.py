@@ -115,7 +115,7 @@ node_sizes = []
 node_colors = []
 node_symbols = []
 
-# List of internal nodes (all nodes that aren't species)
+# List of internal nodes
 internal_nodes = [
     "Hominidae", "Intermediate1", "Intermediate2", 
     "Homo", "Intermediate3", "Pan", "Pongo", "Hylobatidae", 
@@ -126,13 +126,11 @@ for node in G.nodes():
     x, y = pos[node]
     node_x.append(x)
     node_y.append(y)
-    # Only show text for non-internal nodes
     node_text.append(node if node not in internal_nodes else "")
-    node_sizes.append(15)  # All nodes same size
-    node_colors.append('#2E86C1')  # All nodes blue
-    node_symbols.append('circle')  # All nodes circles
+    node_sizes.append(15)  
+    node_colors.append('#2E86C1')  
+    node_symbols.append('circle')  
 
-# Update the figure creation
 fig = go.Figure()
 
 # Update the node trace
@@ -154,7 +152,6 @@ fig.add_trace(
     )
 )
 
-# Add vertical time markers
 for time in range(0, 26, 5):  
     fig.add_shape(
         type="line",
@@ -181,7 +178,6 @@ fig.add_trace(
 )
 
 
-# Update layout with x-axis timeline
 fig.update_layout(
     title="",
     showlegend=False,
@@ -205,7 +201,6 @@ fig.update_layout(
     )
 )
 
-# Update axis ranges
 fig.update_yaxes(
     showgrid=False, 
     zeroline=False, 
@@ -213,20 +208,15 @@ fig.update_yaxes(
     range=[-3.5, 6.5]
 )
 
-# Update axis ranges to ensure all labels are visible
-
-
 
 # Create Dash app
 app = Dash(__name__)
 
 # Define app layout
 app.layout = html.Div([
-    # Title
     html.H1("Hominoidea Phylogenetic Tree", 
             style={'textAlign': 'center', 'color': '#333', 'padding': '20px'}),
     
-    # Instruction box
     html.Div([
         html.P([
             html.Span("• ", style={'color': '#2E86C1', 'fontSize': '20px'}),
@@ -351,7 +341,6 @@ def display_click_data(clickData):
 
     
     if info.get('is_internal', False):
-        # Display for internal nodes
         return [
             html.H3("Common Ancestor", style={'color': '#333', 'marginBottom': '20px'}),
             html.Div([
